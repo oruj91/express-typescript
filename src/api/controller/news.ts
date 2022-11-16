@@ -5,14 +5,23 @@ import Message from '../../constant/Message'
 import {ErrorException} from '../../middleware/Error'
 
 export const getList = async (req: Request, res: Response) => {
-  const data = await News.findList()
-  return res.json({data})
+  try {
+    const data = await News.findList()
+    return res.json({data})
+  } catch (e) {
+    return ErrorException(e, req, res)
+  }
 }
 
 export const getOne = async (req: Request, res: Response) => {
-  const {id} = req.params
-  const data = await News.findOne(id)
-  return res.json({data})
+  try {
+    const {id} = req.params
+    const data = await News.findOne(id)
+
+    return res.json({data})
+  } catch (e) {
+    return ErrorException(e, req, res)
+  }
 }
 
 export const create = async (req: Request, res: Response) => {

@@ -16,10 +16,13 @@ function findList() {
 }
 
 function findOne(id: string) {
-  return new Promise((resolve, reject) => {
-    mustBeInArray(newsJson, id)
-      .then(news => resolve(news))
-      .catch(err => reject(err))
+  return new Promise(async (resolve, reject) => {
+    try {
+      const news = await mustBeInArray(newsJson, id)
+      resolve(news)
+    } catch (e) {
+      reject(e)
+    }
   })
 }
 
@@ -43,24 +46,26 @@ function create(data: PostDto) {
 function update(id: string, data: PutDto) {
   const news: News[] = newsJson
 
-  return new Promise((resolve, reject) => {
-    mustBeInArray(news, id)
-      .then(updatingNews => {
-        if (updatingNews) {
-          const index = news.findIndex(p => p.id == updatingNews.id)
+  return new Promise(async (resolve, reject) => {
+    try {
+      const updatingNews = await mustBeInArray(news, id)
 
-          const newNews = {
-            ...updatingNews,
-            ...data,
-            updatedAt: newDate(),
-          }
+      if (updatingNews) {
+        const index = news.findIndex(p => p.id == updatingNews.id)
 
-          news[index] = newNews
-          writeJSONFile('news.json', news)
-          resolve(newNews)
+        const newNews = {
+          ...updatingNews,
+          ...data,
+          updatedAt: newDate(),
         }
-      })
-      .catch(err => reject(err))
+
+        news[index] = newNews
+        writeJSONFile('news.json', news)
+        resolve(newNews)
+      }
+    } catch (e) {
+      reject(e)
+    }
   })
 }
 

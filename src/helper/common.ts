@@ -19,7 +19,7 @@ function mustBeInArray<Type extends Row>(array: Type[], id: string): Promise<Typ
     const row = array.find(r => r.id == +id)
     if (!row) {
       reject({
-        message: 'ID is not good',
+        message: 'Record with this ID is not defined',
         status: 404,
       })
     }
