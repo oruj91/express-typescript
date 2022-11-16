@@ -36,7 +36,16 @@ export const create = async (req: Request, res: Response) => {
 export const update = async (req: Request, res: Response) => {
   try {
     const response = await News.update(req.params.id, req.body)
-    return res.status(HttpStatus.OK).json({data: response, message: Message.CREATED})
+    return res.status(HttpStatus.OK).json({data: response, message: Message.EDITED})
+  } catch (e) {
+    return ErrorException(e, req, res)
+  }
+}
+
+export const remove = async (req: Request, res: Response) => {
+  try {
+    const response = await News.remove(req.params.id)
+    return res.status(HttpStatus.OK).json({data: response, message: Message.DELETED})
   } catch (e) {
     return ErrorException(e, req, res)
   }

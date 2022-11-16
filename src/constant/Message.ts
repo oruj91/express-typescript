@@ -6,5 +6,7 @@ export default {
   INVALID_FILE_TYPE: 'Invalid file type',
   NOT_FOUND: 'Not Found',
   CREATED: 'The record successfully created',
+  EDITED: 'The record successfully created',
+  DELETED: 'The record successfully created',
   INTERNAL_SERVER_ERROR: 'Internal server error',
 }

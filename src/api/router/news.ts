@@ -12,5 +12,6 @@ router.route('/')
 router.route('/:id')
   .get(controller.getOne)
   .put(Validator(putSchema), controller.update)
+  .delete(controller.remove)
 
 export default router

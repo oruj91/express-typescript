@@ -69,7 +69,24 @@ function update(id: string, data: PutDto) {
   })
 }
 
-function remove(id: number) {}
+function remove(id: string): Promise<void> {
+  const news: News[] = newsJson
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const removingNews = await mustBeInArray(newsJson, id)
+
+      if (removingNews) {
+        const newNews = news.filter(p => p.id !== +id)
+        writeJSONFile('news.json', newNews)
+      }
+
+      resolve()
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
 
 export default {
   findList,
